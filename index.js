@@ -25,13 +25,23 @@ io.on('connection', (socket) => {
 
   // Movimiento
   socket.on('update-position', (data) => {
-    const payload = {
-    id: socket.id, // ✅ MUY IMPORTANTE
+  const payload = {
+    id: socket.id,
+    position: data.position,
+    rotation: data.rotation,
+    animation: data.animation
+  };
+  socket.broadcast.emit('player-moved', payload);
+});
+
+socket.on('move', (data) => {
+  socket.broadcast.emit('remoteMove', {
+    id: socket.id,
     position: data.position,
     rotation: data.rotation
-    }
-      socket.broadcast.emit('player-moved', payload);
   });
+});
+
 
   // Desconexión
   socket.on('disconnect', () => {
