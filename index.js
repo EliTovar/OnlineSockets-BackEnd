@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
+const { text } = require('stream/consumers');
 
 const app = express();
 const server = http.createServer(app);
@@ -41,6 +42,7 @@ socket.on('move', (data) => {
     rotation: data.rotation
   });
 });
+
 
 
   // Desconexión
