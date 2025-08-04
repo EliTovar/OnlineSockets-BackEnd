@@ -24,6 +24,13 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('player-joined', { id: socket.id, ...data });
   });
 
+  //retransmitir los mensajes a todos los jugadores
+  socket.on('chat-message', (data) => {
+    console.log(`💬 Chat de ${socket.id}:`, data.message);
+    io.emit('chat-message', { id: socket.id, message: data.message });
+  });
+
+
   // Movimiento
   socket.on('update-position', (data) => {
   const payload = {
@@ -56,3 +63,6 @@ socket.on('move', (data) => {
 server.listen(PORT, () => {
   console.log(`✅ Servidor en http://localhost:${PORT}`);
 });
+// server.listen(3000, '0.0.0.0', () => {
+//   console.log('Servidor Socket.IO escuchando en puerto 3000');
+// });
