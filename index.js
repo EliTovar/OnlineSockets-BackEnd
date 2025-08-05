@@ -37,9 +37,11 @@ io.on('connection', (socket) => {
     id: socket.id,
     position: data.position,
     rotation: data.rotation,
-    animation: data.animation
+    animation: data.animation,
+    ray: data.ray
   };
-  socket.broadcast.emit('player-moved', payload);
+  //Envía a todos (incluyendo al emisor)
+  io.emit('player-moved', payload);
 });
 
 socket.on('move', (data) => {
